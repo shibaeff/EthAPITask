@@ -1,0 +1,8 @@
+server:
+  port: ":8000"
+  ethnode: "https://methodical-billowing-dew.quiknode.pro/d23a8baebb4c5f2c1e0c25e20655e66a48a5873e"
+  etherscankey: "43RK34MXPVFPPGXPUPWTI4YE4GHHQC75UZ"
+  mode: "beast"
+
+logging:
+  level: info

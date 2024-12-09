@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  eth_validator_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - CONFIG_FILE=config.yaml
+    command: ["./mewatcher", "--config", "/app/config.yaml", "server"]
