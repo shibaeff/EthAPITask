@@ -59,9 +59,18 @@ rather than hunt down precise formulas for these rewards (also, one should take 
    ```bash
    make run
    ```
+Or:
+   ```bash
+   docker compose up
+   ```
+
 
 ## API Endpoints
 
+The api Swagger and API itself are deployed here:
+http://206.81.25.233:8000/swagger/index.html
+
+http://206.81.25.233:8000
 ### Get Block Reward
 ```bash
 curl http://localhost:8000/blockreward/{slot}
