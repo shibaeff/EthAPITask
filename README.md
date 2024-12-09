@@ -3,7 +3,9 @@
 This is a RESTful API application that provides information about Ethereum block rewards and validator sync committee duties.
 ## Some assumptions made
 
-
+0. All slotno requests about "rewards" do not make sense for slots <  4700013.
+Info about the sync committees and the state of validator indexes also seems to lag for slots before the Merge (however, beaconcha serves them well).
+I think that's something to do with Altair and go out of the scope of this assignment.
 1. All the parameters are for mainnet (it would be nicer to make config with custom rpc and network params);
 it's imaginable to spin up a local Kurtosis env with some modified eth consensus
 2. The service is designed in a manner that it's used locally by company, so no fancy async patterns and 
