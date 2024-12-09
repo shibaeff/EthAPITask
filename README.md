@@ -4,21 +4,21 @@ This is a RESTful API application that provides information about Ethereum block
 ## Some assumptions made
 
 
-2. All the parameters are for mainnet (it would be nicer to make config with custom rpc and network params);
+1. All the parameters are for mainnet (it would be nicer to make config with custom rpc and network params);
 it's imaginable to spin up a local Kurtosis env with some modified eth consensus
-3. The service is designed in a manner that it's used locally by company, so no fancy async patterns and 
+2. The service is designed in a manner that it's used locally by company, so no fancy async patterns and 
 a global eth client object
-5. Fee sums in gwei are *statistically correct*, I tested the values against block explorers;
+3. Fee sums in gwei are *statistically correct*, I tested the values against block explorers;
 no blazing precision to the 9th decimal or something.
-8. Reward for the MEV block is extracted from the MEV reward transfer tx and added to the overall reward for block
-9. int64 is used a base type for the endpoints (current block height and rewards kind of fit this data type); 
+4. Reward for the MEV block is extracted from the MEV reward transfer tx and added to the overall reward for block
+5. int64 is used a base type for the endpoints (current block height and rewards kind of fit this data type); 
 uint64 could be better but `big.NewInt` constructor in golang works with signed version and i prefer to use it for readability
-11. the design is intentionally procedural since there's no complex business logic or databases involved (that's a simple statictical service, not an online shop)
-13. There're some beacon API libraries from protolambda and ethpandaops; but they do not seem to implement 100% of spec;
+6. the design is intentionally procedural since there's no complex business logic or databases involved (that's a simple statictical service, not an online shop)
+7. There're some beacon API libraries from protolambda and ethpandaops; but they do not seem to implement 100% of spec;
 that's why I decided to hardcode types and endpoints.
-14. Some of the code is deprecated, but it's there to show the way I thought.
-15. There's a method to convert val indices into public keys using native beacon node API, but it's too slow to make 
-16. Ethereum reward structure is complex. It's impacted by the sync committee rewards, attestations rewards, fees rewards and potential mev rewards.
+8. Some of the code is deprecated, but it's there to show the way I thought.
+9. There's a method to convert val indices into public keys using native beacon node API, but it's too slow to make 
+10. Ethereum reward structure is complex. It's impacted by the sync committee rewards, attestations rewards, fees rewards and potential mev rewards.
 That's outlined here: https://eth2book.info/capella/part2/incentives/rewards/#rewards. 
 I try to calculate the total sum of rewards for proposing validator.
 
