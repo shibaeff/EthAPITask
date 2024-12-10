@@ -63,6 +63,7 @@ rather than hunt down precise formulas for these rewards (also, one should take 
    ```
 Or:
    ```bash
+   docker compose build
    docker compose up
    ```
 

@@ -3,6 +3,7 @@ package beaconadapter
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
@@ -86,7 +87,9 @@ func (c *BeaconClient) FetchAttestationRewardsEstimate(slotno, validatorIndex in
 	if err := json.NewDecoder(resp.Body).Decode(&blockResp); err != nil {
 		return 0, fmt.Errorf("failed to decode block response: %w", err)
 	}
-
+	if len(blockResp.Data) == 0 {
+		return 0, errors.New("block response has no data")
+	}
 	return int64(blockResp.Data[0].Income.AttestationHeadReward / 32), nil
 }
 
