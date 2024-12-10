@@ -80,9 +80,9 @@ type BlockResponse struct {
 type SyncDutiesResponse struct {
 	ExecutionOptimistic bool `json:"execution_optimistic"`
 	Finalized           bool `json:"finalized"`
-	Data                []struct {
-		ValidatorIndex string `json:"validator_index"`
-		Reward         string `json:"reward"`
+	Data                struct {
+		Validators          []string   `json:"validators"`
+		ValidatorAggregates [][]string `json:"validator_aggregates"`
 	} `json:"data"`
 }
 

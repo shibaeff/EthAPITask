@@ -68,8 +68,8 @@ func GetSyncDuties(c *gin.Context) {
 	}
 	result := models.SyncDuties{Validators: []string{}}
 	indices := make([]int64, 0)
-	for _, item := range dutiesResp.Data {
-		index, err := strconv.ParseInt(item.ValidatorIndex, 10, 64)
+	for _, item := range dutiesResp.Data.Validators {
+		index, err := strconv.ParseInt(item, 10, 64)
 		if err != nil {
 			logrus.WithError(err).Errorf("could not convert valkeys for slot %v", slot)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "index conversion failed"})

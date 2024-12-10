@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	constSyncDutiesPath     = "/eth/v1/beacon/rewards/sync_committee/%v"
+	constSyncDutiesPath     = "/eth/v1/beacon/states/%v/sync_committees"
 	constBlockPath          = "/eth/v2/beacon/blocks/%v"
 	constValidatorPath      = "/eth/v1/beacon/states/%v/validators"
 	constSyncDutiesRewards  = "/eth/v1/beacon/rewards/sync_committee/%v"
@@ -94,16 +94,8 @@ func (c *BeaconClient) FetchSyncDuties(slotno int64) (*SyncDutiesResponse, error
 	newURL := *c.BaseURL
 	newURL.Path = path.Join(newURL.Path, fmt.Sprintf(constSyncDutiesPath, slotno))
 	currentURL := newURL.String()
-	payload := []byte("[]")
 
-	req, err := http.NewRequest("POST", currentURL, bytes.NewBuffer(payload))
-	if err != nil {
-		return nil, fmt.Errorf("failed to create HTTP request: %w", err)
-	}
-	req.Header.Set("accept", "application/json")
-	req.Header.Set("Content-Type", "application/json")
-
-	resp, err := c.HTTPClient.Do(req)
+	resp, err := http.Get(currentURL)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch sync duties response: %w", err)
 	}
@@ -111,11 +103,11 @@ func (c *BeaconClient) FetchSyncDuties(slotno int64) (*SyncDutiesResponse, error
 	if resp.StatusCode != http.StatusOK {
 		return nil, fmt.Errorf("unexpected HTTP status code: %d", resp.StatusCode)
 	}
-	var rewardsResp SyncDutiesResponse
-	if err := json.NewDecoder(resp.Body).Decode(&rewardsResp); err != nil {
+	var syncDutiesResp SyncDutiesResponse
+	if err := json.NewDecoder(resp.Body).Decode(&syncDutiesResp); err != nil {
 		return nil, fmt.Errorf("failed to decode sync duties response: %w", err)
 	}
-	return &rewardsResp, nil
+	return &syncDutiesResp, nil
 }
 
 func (c *BeaconClient) PublicKeysByValidatorIDs(validatorIDs []int64, slotno int64) (*ValidatorResponse, error) {

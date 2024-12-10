@@ -105,12 +105,12 @@ func (rc *RewardsClient) GetBlockRewardFull(ctx context.Context, slotno int64) (
 	proposerSlashingsReward, _ := strconv.ParseInt(blockRewardsResp.Data.ProposerSlashings, 10, 64)
 	transactionFees.Add(transactionFees, big.NewInt(proposerSlashingsReward))
 
-	for _, item := range syncCommittee.Data {
-		curValidatorIndex, _ := strconv.ParseInt(item.ValidatorIndex, 10, 64)
+	for _, item := range syncCommittee.Data.Validators {
+		curValidatorIndex, _ := strconv.ParseInt(item, 10, 64)
 		if curValidatorIndex == proposerIndex {
 			// add the sync duties reward
 			blockSyncDutyRewTotal, _ := strconv.ParseInt(blockRewardsResp.Data.SyncAggregate, 10, 64)
-			transactionFees.Add(transactionFees, big.NewInt(blockSyncDutyRewTotal/int64(len(syncCommittee.Data))))
+			transactionFees.Add(transactionFees, big.NewInt(blockSyncDutyRewTotal/int64(len(syncCommittee.Data.Validators))))
 			break
 		}
 	}
